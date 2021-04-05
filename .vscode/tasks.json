@@ -1,0 +1,55 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"type": "docker-build",
+			"label": "docker-build",
+			"platform": "node",
+			"dockerBuild": {
+				"dockerfile": "${workspaceFolder}/Dockerfile",
+				"context": "${workspaceFolder}",
+				"pull": true
+			}
+		},
+		{
+			"type": "docker-run",
+			"label": "docker-run: release",
+			"dependsOn": [
+				"docker-build"
+			],			
+			"dockerRun": {
+				"env": {
+					"DEBUG": "*",
+					"NODE_ENV": "development",
+					"REACT_APP_API_URL":"https://api.toms-lab.net/gateway/carlibraryapi",
+					"REACT_APP_OAUTH_URL":"https://authorize.toms-lab.net/carlibraryauth",
+					"REACT_APP_OAUTH_CLIENT_ID":"dc83392c-9486-4ad6-8339-2c94866ad6b1",
+					"REACT_APP_OAUTH_CLIENT_SECRET":"ZGM4MzM5MmMtOTQ4Ni00YWQ2LTgzMzktMmM5NDg2NmFkNmIxOmtPTlZoZzJYWVAwUHQ2bkROSUZTMkZzYWMzQW9hLUs0U2NFc2kyRVpNdW8="
+				},
+				"command": "react-scripts start"
+			},
+			"platform": "node"
+		},
+		{
+			"type": "docker-run",
+			"label": "docker-run: debug",
+			"dependsOn": [
+				"docker-build"
+			],
+			"dockerRun": {
+				"env": {
+					"DEBUG": "*",
+					"NODE_ENV": "development",
+					"REACT_APP_API_URL":"https://api.toms-lab.net/gateway/carlibraryapi",
+					"REACT_APP_OAUTH_URL":"https://authorize.toms-lab.net/carlibraryauth",
+					"REACT_APP_OAUTH_CLIENT_ID":"dc83392c-9486-4ad6-8339-2c94866ad6b1",
+					"REACT_APP_OAUTH_CLIENT_SECRET":"ZGM4MzM5MmMtOTQ4Ni00YWQ2LTgzMzktMmM5NDg2NmFkNmIxOmtPTlZoZzJYWVAwUHQ2bkROSUZTMkZzYWMzQW9hLUs0U2NFc2kyRVpNdW8="
+				},
+				"command": "react-scripts start"
+			},
+			"node": {
+				"enableDebugging": true
+			}
+		}
+	]
+}
